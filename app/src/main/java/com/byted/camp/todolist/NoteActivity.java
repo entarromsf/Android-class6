@@ -21,6 +21,7 @@ import java.util.Date;
 public class NoteActivity extends AppCompatActivity {
 
     private EditText editText;
+    private EditText editPrio;
     private Button addBtn;
     private TodoDbHelper mDbHelper;
 
@@ -36,6 +37,11 @@ public class NoteActivity extends AppCompatActivity {
         editText = findViewById(R.id.edit_text);
         editText.setFocusable(true);
         editText.requestFocus();
+
+        editPrio = findViewById(R.id.edit_priority);
+        editPrio.setFocusable(true);
+        editPrio.requestFocus();
+
         InputMethodManager inputManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputManager != null) {
@@ -48,12 +54,18 @@ public class NoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 CharSequence content = editText.getText();
+                CharSequence prio = editPrio.getText();
+
+                if (TextUtils.isEmpty(prio)) {
+                    prio = "0";
+                }
+
                 if (TextUtils.isEmpty(content)) {
                     Toast.makeText(NoteActivity.this,
                             "No content to add", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                boolean succeed = saveNote2Database(content.toString().trim());
+                boolean succeed = saveNote2Database(content.toString().trim(),prio.toString().trim());
                 if (succeed) {
                     Toast.makeText(NoteActivity.this,
                             "Note added", Toast.LENGTH_SHORT).show();
@@ -73,8 +85,10 @@ public class NoteActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private boolean saveNote2Database(String content) {
+    private boolean saveNote2Database(String content, String prio) {
         // TODO 插入一条新数据，返回是否插入成功
+        int intPrio = Integer.parseInt(prio);
+
         Date date = new Date();
         //TodoDbHelper mDbHelper = new TodoDbHelper(this);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -82,6 +96,7 @@ public class NoteActivity extends AppCompatActivity {
         values.put(TodoContract.MyContract.CONTENT,content);
         values.put(TodoContract.MyContract.STATE,0);
         values.put(TodoContract.MyContract.TIME,date.getTime());
+        values.put(TodoContract.MyContract.PRIORITY,intPrio);
         long newRowId = db.insert(TodoContract.MyContract.TABLE_NAME,null,values);
         return true;
     }

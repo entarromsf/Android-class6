@@ -13,7 +13,7 @@ import android.util.Log;
 public class TodoDbHelper extends SQLiteOpenHelper {
 
     // TODO 定义数据库名、版本；创建数据库
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "ToDo.db";
     //CREATE TABLE note(_id INTEGER PRIMARY KEY AUTOINCREMENT, date INTEGER, state INTEGER, content TEXT);
 
@@ -23,7 +23,6 @@ public class TodoDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d("Oncreate", "onCreate: sdsds");
         db.execSQL(TodoContract.SQL_CREATE_TABLE);
     }
 

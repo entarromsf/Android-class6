@@ -118,14 +118,7 @@ public class MainActivity extends AppCompatActivity {
         mDbHelper = new TodoDbHelper(this);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
-        String[] projection = {
-                TodoContract.MyContract._ID,
-                TodoContract.MyContract.TIME,
-                TodoContract.MyContract.STATE,
-                TodoContract.MyContract.CONTENT
-        };
-
-        String sql = "select * from "+ TodoContract.MyContract.TABLE_NAME;
+        String sql = "select * from "+ TodoContract.MyContract.TABLE_NAME + " order by "+ TodoContract.MyContract.PRIORITY + " asc";
 
         Cursor cursor = null;
 
@@ -138,8 +131,9 @@ public class MainActivity extends AppCompatActivity {
                 String content = cursor.getString(cursor.getColumnIndex(TodoContract.MyContract.CONTENT));
                 long datemsg = cursor.getLong(cursor.getColumnIndex(TodoContract.MyContract.TIME));
                 int state = cursor.getInt(cursor.getColumnIndex(TodoContract.MyContract.STATE));
+                int prio = cursor.getInt(cursor.getColumnIndex(TodoContract.MyContract.PRIORITY));
 
-                Note note = new Note(id);
+                Note note = new Note(id,prio);
                 note.setContent(content);
                 note.setDate(new Date(datemsg));
                 note.setState(State.from(state));

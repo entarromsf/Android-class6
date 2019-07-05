@@ -15,7 +15,19 @@
         android:gravity="start|top"
         android:padding="4dp"
         android:textColor="#1e1e1e" />
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="priority(默认为最高优先级0)"
+        />
+    <EditText
+        android:id="@+id/edit_priority"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_edit"
+        android:gravity="start|top"
+        android:padding="4dp"
+        android:textColor="#1e1e1e" />
     <Button
         android:id="@+id/btn_add"
         android:layout_width="match_parent"

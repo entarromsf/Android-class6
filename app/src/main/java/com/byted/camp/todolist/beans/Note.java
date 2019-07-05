@@ -13,9 +13,11 @@ public class Note {
     private Date date;
     private State state;
     private String content;
+    public final int prio;
 
-    public Note(long id) {
+    public Note(long id,int prio) {
         this.id = id;
+        this.prio = prio;
     }
 
     public Date getDate() {
